@@ -17,8 +17,8 @@ export function Provider({ children }: Props) {
     <NextUIProvider>
       <ThemeProvider
         attribute="class"
-        defaulTheme="light"
-        enableSystem={false}
+        defaultTheme="system"
+        enableSystem={true}
         disableTransitionOnChange
       >
         <QueryClientProvider client={queryClient}>
