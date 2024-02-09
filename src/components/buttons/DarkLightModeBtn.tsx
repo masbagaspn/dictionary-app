@@ -26,12 +26,15 @@ const DarkLightModeBtn = () => {
         <PiMoonStarsFill
           className={cn(
             "text-neutral-500  transition",
-            "hover:text-purple-500"
+            "active:text-purple-500 lg:hover:text-purple-500"
           )}
         />
       ) : (
         <PiSunFill
-          className={cn("text-neutral-500 transition", "hover:text-purple-400")}
+          className={cn(
+            "text-neutral-500 transition",
+            "active:text-purple-500 lg:hover:text-purple-400"
+          )}
         />
       )}
     </button>
