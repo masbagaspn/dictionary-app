@@ -12,21 +12,6 @@ type Props = {
 export default function AudioBtn({ audio }: Props) {
   const [play, setPlay] = React.useState(false);
 
-  const variants = {
-    play: {
-      opacity: [0, 1, 0, 1, 0],
-      transition: {
-        duration: 4,
-        times: [0, 0.25, 0.5, 0.75, 1],
-        repeatType: "loop",
-        repeat: Infinity,
-      },
-    },
-    pause: {
-      opacity: 1,
-    },
-  };
-
   const audioRef = React.useRef<HTMLAudioElement | null>(null);
 
   const handlePlay = () => {
@@ -79,8 +64,21 @@ export default function AudioBtn({ audio }: Props) {
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth="16"
-            variants={variants}
-            animate={play ? "play" : "pause"}
+            animate={
+              play
+                ? {
+                    opacity: [0, 1, 0, 1, 0],
+                    transition: {
+                      duration: 4,
+                      times: [0, 0.25, 0.5, 0.75, 1],
+                      repeatType: "loop",
+                      repeat: Infinity,
+                    },
+                  }
+                : {
+                    opacity: 1,
+                  }
+            }
           />
           <m.path
             d="M221.67,80a72,72,0,0,1,0,96"
@@ -89,14 +87,21 @@ export default function AudioBtn({ audio }: Props) {
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth="16"
-            variants={variants}
             animate={
               play
                 ? {
-                    transition: { delay: 0.2, ...variants.play.transition },
-                    opacity: variants.play.opacity,
+                    opacity: [0, 1, 0, 1, 0],
+                    transition: {
+                      duration: 4,
+                      delay: 0.2,
+                      times: [0, 0.25, 0.5, 0.75, 1],
+                      repeatType: "loop",
+                      repeat: Infinity,
+                    },
                   }
-                : "pause"
+                : {
+                    opacity: 1,
+                  }
             }
           />
         </m.svg>
