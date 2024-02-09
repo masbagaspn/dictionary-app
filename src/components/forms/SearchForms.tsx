@@ -39,7 +39,7 @@ const SearchForm = () => {
         name="wordField"
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
-        className="bg-transparent w-full placeholder:font-medium placeholder:text-purple-400 dark:placeholder:text-purple-400 text-xs md:text-sm capitalize"
+        className="bg-transparent w-full placeholder:font-light placeholder:text-purple-400 dark:placeholder:text-purple-400 text-xs md:text-sm capitalize"
         placeholder="Looking for word definition?"
       />
       <PiMagnifyingGlass />
