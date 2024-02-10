@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { motion as m } from "framer-motion";
+import { AnimatePresence, motion as m } from "framer-motion";
 
 import { useFontStore } from "@/store/zustand";
 import { PiCaretDown } from "react-icons/pi";
@@ -20,7 +20,10 @@ export default function SelectFont() {
   };
 
   return (
-    <div className="relative flex flex-col gap-1 tracking-tight text-[10px] md:text-xs">
+    <div
+      onBlur={() => setIsOpen(false)}
+      className="relative flex flex-col gap-1 tracking-tight text-[10px] md:text-xs"
+    >
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
@@ -37,30 +40,39 @@ export default function SelectFont() {
           <PiCaretDown />
         </m.span>
       </button>
-      {isOpen && (
-        <div
-          onMouseLeave={() => setIsOpen(false)}
-          className={cn(
-            "absolute min-w-[96px] flex flex-col p-1 rounded-md shadow-md top-[120%] right-0",
-            "bg-white",
-            "dark:bg-purple-700 dark:text-purple-100"
-          )}
-        >
-          {fonts.map((font) => (
-            <button
-              key={font}
-              className={cn(
-                "text-left bg-white px-3 py-1.5 text-neutral-400 rounded transition capitalize",
-                "hover:bg-purple-50 hover:text-purple-400",
-                "dark:bg-purple-700 dark:text-purple-300 dark:hover:bg-purple-300 dark:hover:text-purple-700"
-              )}
-              onClick={() => handleSelectFont(font)}
-            >
-              {font}
-            </button>
-          ))}
-        </div>
-      )}
+
+      {/* menu */}
+      <AnimatePresence>
+        {isOpen && (
+          <m.div
+            key="font-menu"
+            onMouseLeave={() => setIsOpen(false)}
+            className={cn(
+              "absolute min-w-[96px] flex flex-col p-1 rounded-md shadow-md top-[120%] right-0 overflow-hidden",
+              "bg-white",
+              "dark:bg-neutral-800 dark:text-purple-100"
+            )}
+            initial={{ height: 0 }}
+            animate={{ height: isOpen ? "auto" : 0 }}
+            exit={{ height: 0 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+          >
+            {fonts.map((font) => (
+              <button
+                key={font}
+                className={cn(
+                  "text-left bg-white px-3 py-1.5 text-neutral-400 rounded transition capitalize",
+                  "hover:bg-purple-50 hover:text-purple-400",
+                  "dark:bg-neutral-800 dark:text-purple-200/50 dark:hover:bg-neutral-700 dark:hover:text-purple-200"
+                )}
+                onClick={() => handleSelectFont(font)}
+              >
+                {font}
+              </button>
+            ))}
+          </m.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
