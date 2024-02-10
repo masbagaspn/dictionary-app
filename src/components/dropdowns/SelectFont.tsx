@@ -6,6 +6,7 @@ import { AnimatePresence, motion as m } from "framer-motion";
 import { useFontStore } from "@/store/zustand";
 import { PiCaretDown } from "react-icons/pi";
 import { cn } from "@/lib/utils";
+import { useClickOutside } from "@/hooks/useClickOutside";
 
 export default function SelectFont() {
   const { font, updateFont } = useFontStore();
@@ -14,14 +15,20 @@ export default function SelectFont() {
 
   const fonts = ["serif", "sans serif"];
 
+  const dropdownRef = React.useRef<HTMLDivElement | null>(null);
+
   const handleSelectFont = (selected: string) => {
     updateFont(selected);
     setIsOpen(false);
   };
 
+  useClickOutside(dropdownRef, () => {
+    setIsOpen(false);
+  });
+
   return (
     <div
-      onBlur={() => setIsOpen(false)}
+      ref={dropdownRef}
       className="relative flex flex-col gap-1 tracking-tight text-[10px] md:text-xs"
     >
       <button
